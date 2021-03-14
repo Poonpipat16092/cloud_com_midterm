@@ -1,19 +1,16 @@
 import fs from 'fs';
 import AWS from 'aws-sdk';
 // Enter copied or downloaded access ID and secret key here
-const ID = process.env.AWS_KEY;
-const SECRET = process.env.AWS_PRIVATE_KEY;
-
 // The name of the bucket that you have created
 const BUCKET_NAME = 'cloud-com-gcp2021';
-
-const s3 = new AWS.S3({
-    accessKeyId: ID,
-    secretAccessKey: SECRET
-});
-
 const uploadFileToS3 =  async(fileName, fileContent): Promise<void> => {
     return new Promise((resolve, reject) => {
+        const ID = process.env.AWS_KEY;
+        const SECRET = process.env.AWS_PRIVATE_KEY;
+        const s3 = new AWS.S3({
+                accessKeyId: ID,
+                secretAccessKey: SECRET
+        });
         // Read content from the file
         // Setting up S3 upload parameters
         const params = {
@@ -21,16 +18,13 @@ const uploadFileToS3 =  async(fileName, fileContent): Promise<void> => {
             Key: fileName, // File name you want to save as in S3
             Body: fileContent
         };
-
         // Uploading files to the bucket
         s3.upload(params, (err, data) => {
             if (err) {
                 reject(err);
             }
             resolve();
-            console.log(`File uploaded successfully. ${data.Location}`);
         });
     });
-    
 };
 export default uploadFileToS3;
