@@ -21,7 +21,6 @@ const uploadFileToS3 =  async(fileName, fileContent): Promise<void> => {
             Key: fileName, // File name you want to save as in S3
             Body: fileContent
         };
-
         // Uploading files to the bucket
         s3.upload(params, (err, data) => {
             if (err) {
@@ -30,6 +29,5 @@ const uploadFileToS3 =  async(fileName, fileContent): Promise<void> => {
             resolve();
         });
     });
-    
 };
 export default uploadFileToS3;
