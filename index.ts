@@ -28,7 +28,13 @@ app.get('/gcp/aws/read/:filename',async function (req, res, next) {
 
 // arm  compute GCP and S3
 app.post('/gcp/aws/upload', upload.single('filename'),async function (req, res, next) {
-  await uploadFileToS3(req.file.originalname,req.file.buffer);
+  var filename          = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789()+=-_';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < 10; i++ ) {
+    filename += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  await uploadFileToS3(filename,req.file.buffer);
   res.send("Upload succesfully");
 });
 
