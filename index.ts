@@ -38,6 +38,11 @@ app.post('/gcp/aws/upload', upload.single('filename'),async function (req, res, 
   res.send("Upload succesfully");
 });
 
+app.post('/gcp/aws/update', upload.single('filename'),async function (req, res, next) {
+  await uploadFileToS3(req.file.originalname,req.file.buffer);
+  res.send("Upload succesfully");
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 });
